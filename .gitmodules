@@ -1,0 +1,3 @@
+[submodule "Ice"]
+	path = Ice
+	url = https://github.com/jordanbaird/Ice.git
