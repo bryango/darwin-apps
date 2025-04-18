@@ -13,7 +13,7 @@ CODESIGNING=DEVELOPMENT_TEAM=AWMJ8H4G7B
   xcodebuild -scheme Ice -configuration Release \
     -derivedDataPath ./DerivedData \
     "$CODESIGNING"
-  cp -af --reflink=auto ./DerivedData/Build/Products/Release/Ice.app ../archive
+  cp -af --reflink=auto ./DerivedData/Build/Products/Release/Ice.app ../archive/Applications
 )
 
 pwd
