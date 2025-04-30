@@ -1,3 +1,15 @@
 [submodule "Ice"]
 	path = Ice
 	url = https://github.com/jordanbaird/Ice.git
+[submodule "AltTab"]
+	path = AltTab
+	url = https://github.com/lwouis/alt-tab-macos.git
+[submodule "MiddleClick"]
+	path = MiddleClick
+	url = https://github.com/artginzburg/MiddleClick.git
+[submodule "Rectangle"]
+	path = Rectangle
+	url = https://github.com/rxhanson/Rectangle.git
+[submodule "automute"]
+	path = automute
+	url = https://github.com/yonilevy/automute.git
