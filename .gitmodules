@@ -10,6 +10,6 @@
 [submodule "Rectangle"]
 	path = Rectangle
 	url = https://github.com/rxhanson/Rectangle.git
-[submodule "automute"]
-	path = automute
+[submodule "AutoMute"]
+	path = AutoMute
 	url = https://github.com/yonilevy/automute.git

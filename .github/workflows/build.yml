@@ -66,10 +66,10 @@ jobs:
         # cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
         # run the actual build
-        ./darwin/build.sh
+        ./build.sh
 
         # write nix store path to a gist
-        STRING_TO_WRITE=$(cat ./darwin/darwin-apps.txt)
+        STRING_TO_WRITE=$(cat ./darwin-apps.txt)
         GIST_ID=0057346dbf85981e58518be49d36fc06
         FILENAME="darwin-apps.txt"
 
