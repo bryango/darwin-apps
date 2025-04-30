@@ -1,0 +1,14 @@
+diff --git a/Makefile b/Makefile
+index c146d26..e1f63fb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,8 @@
+ all: archive export compress
+ 
+ archive:
+-	xcodebuild -project MiddleClick.xcodeproj -scheme MiddleClick -configuration Release archive
++	xcodebuild -project MiddleClick.xcodeproj -scheme MiddleClick -configuration Release archive \
++		DEVELOPMENT_TEAM=AWMJ8H4G7B
+ 
+ export:
+ 	xcodebuild -exportArchive \

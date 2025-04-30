@@ -1,0 +1,149 @@
+diff --git a/AutoMute Helper/AutoMute_Helper.entitlements b/AutoMute Helper/AutoMute_Helper.entitlements
+index 3c4a765..311b32b 100644
+--- a/AutoMute Helper/AutoMute_Helper.entitlements	
++++ b/AutoMute Helper/AutoMute_Helper.entitlements	
+@@ -3,11 +3,7 @@
+ <plist version="1.0">
+ <dict>
+ 	<key>com.apple.security.app-sandbox</key>
+-	<true/>
+-	<key>com.apple.security.application-groups</key>
+-	<array>
+-		<string>group.26ZKW6U635.com.yonilevy.automute</string>
+-	</array>
++	<false/>
+ 	<key>com.apple.security.files.user-selected.read-only</key>
+ 	<true/>
+ </dict>
+diff --git a/automute.xcodeproj/project.pbxproj b/automute.xcodeproj/project.pbxproj
+index 4b7e0d2..e6d8afa 100644
+--- a/automute.xcodeproj/project.pbxproj
++++ b/automute.xcodeproj/project.pbxproj
+@@ -277,7 +277,7 @@
+ 		E9395D6521A8814B0078CC5C /* Project object */ = {
+ 			isa = PBXProject;
+ 			attributes = {
+-				LastUpgradeCheck = 1010;
++				LastUpgradeCheck = 1630;
+ 				ORGANIZATIONNAME = "Yoni Levy";
+ 				TargetAttributes = {
+ 					E9395D6C21A8814B0078CC5C = {
+@@ -449,9 +449,10 @@
+ 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+ 				CLANG_WARN_UNREACHABLE_CODE = YES;
+ 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+-				CODE_SIGN_IDENTITY = "Mac Developer";
++				CODE_SIGN_IDENTITY = "Apple Development";
+ 				COPY_PHASE_STRIP = NO;
+ 				DEBUG_INFORMATION_FORMAT = dwarf;
++				DEVELOPMENT_TEAM = AWMJ8H4G7B;
+ 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+ 				ENABLE_TESTABILITY = YES;
+ 				GCC_C_LANGUAGE_STANDARD = gnu11;
+@@ -508,9 +509,10 @@
+ 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+ 				CLANG_WARN_UNREACHABLE_CODE = YES;
+ 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+-				CODE_SIGN_IDENTITY = "Mac Developer";
++				CODE_SIGN_IDENTITY = "Apple Development";
+ 				COPY_PHASE_STRIP = NO;
+ 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
++				DEVELOPMENT_TEAM = AWMJ8H4G7B;
+ 				ENABLE_NS_ASSERTIONS = NO;
+ 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+ 				GCC_C_LANGUAGE_STANDARD = gnu11;
+@@ -538,7 +540,6 @@
+ 				CODE_SIGN_STYLE = Automatic;
+ 				COMBINE_HIDPI_IMAGES = YES;
+ 				CURRENT_PROJECT_VERSION = 23;
+-				DEVELOPMENT_TEAM = 26ZKW6U635;
+ 				GCC_PREPROCESSOR_DEFINITIONS = (
+ 					"$(inherited)",
+ 					"COCOAPODS=1",
+@@ -556,7 +557,7 @@
+ 				);
+ 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+ 				MARKETING_VERSION = 1.10;
+-				PRODUCT_BUNDLE_IDENTIFIER = com.yonilevy.mutejack;
++				PRODUCT_BUNDLE_IDENTIFIER = com.bryango.automute;
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 			};
+ 			name = Debug;
+@@ -571,7 +572,6 @@
+ 				CODE_SIGN_STYLE = Automatic;
+ 				COMBINE_HIDPI_IMAGES = YES;
+ 				CURRENT_PROJECT_VERSION = 23;
+-				DEVELOPMENT_TEAM = 26ZKW6U635;
+ 				GCC_PREPROCESSOR_DEFINITIONS = (
+ 					"$(inherited)",
+ 					"COCOAPODS=1",
+@@ -589,7 +589,7 @@
+ 				);
+ 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+ 				MARKETING_VERSION = 1.10;
+-				PRODUCT_BUNDLE_IDENTIFIER = com.yonilevy.mutejack;
++				PRODUCT_BUNDLE_IDENTIFIER = com.bryango.automute;
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 			};
+ 			name = Release;
+@@ -602,7 +602,6 @@
+ 				CODE_SIGN_STYLE = Automatic;
+ 				COMBINE_HIDPI_IMAGES = YES;
+ 				CURRENT_PROJECT_VERSION = 3;
+-				DEVELOPMENT_TEAM = 26ZKW6U635;
+ 				HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/common";
+ 				INFOPLIST_FILE = "AutoMute Helper/Info.plist";
+ 				LD_RUNPATH_SEARCH_PATHS = (
+@@ -611,7 +610,7 @@
+ 				);
+ 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+ 				MARKETING_VERSION = 1.2;
+-				PRODUCT_BUNDLE_IDENTIFIER = "com.yonilevy.Mutejack-Helper";
++				PRODUCT_BUNDLE_IDENTIFIER = "com.bryango.automute-helper";
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				SKIP_INSTALL = YES;
+ 			};
+@@ -625,7 +624,6 @@
+ 				CODE_SIGN_STYLE = Automatic;
+ 				COMBINE_HIDPI_IMAGES = YES;
+ 				CURRENT_PROJECT_VERSION = 3;
+-				DEVELOPMENT_TEAM = 26ZKW6U635;
+ 				HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/common";
+ 				INFOPLIST_FILE = "AutoMute Helper/Info.plist";
+ 				LD_RUNPATH_SEARCH_PATHS = (
+@@ -634,7 +632,7 @@
+ 				);
+ 				MACOSX_DEPLOYMENT_TARGET = 10.13;
+ 				MARKETING_VERSION = 1.2;
+-				PRODUCT_BUNDLE_IDENTIFIER = "com.yonilevy.Mutejack-Helper";
++				PRODUCT_BUNDLE_IDENTIFIER = "com.bryango.automute-helper";
+ 				PRODUCT_NAME = "$(TARGET_NAME)";
+ 				SKIP_INSTALL = YES;
+ 			};
+diff --git a/automute.xcodeproj/xcshareddata/xcschemes/AutoMute.xcscheme b/automute.xcodeproj/xcshareddata/xcschemes/AutoMute.xcscheme
+index d00c7cf..37bed7a 100644
+--- a/automute.xcodeproj/xcshareddata/xcschemes/AutoMute.xcscheme
++++ b/automute.xcodeproj/xcshareddata/xcschemes/AutoMute.xcscheme
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <Scheme
+-   LastUpgradeVersion = "1010"
++   LastUpgradeVersion = "1630"
+    version = "1.7">
+    <BuildAction
+       parallelizeBuildables = "YES"
+diff --git a/automute/automute.entitlements b/automute/automute.entitlements
+index 3c4a765..18aff0c 100644
+--- a/automute/automute.entitlements
++++ b/automute/automute.entitlements
+@@ -4,10 +4,6 @@
+ <dict>
+ 	<key>com.apple.security.app-sandbox</key>
+ 	<true/>
+-	<key>com.apple.security.application-groups</key>
+-	<array>
+-		<string>group.26ZKW6U635.com.yonilevy.automute</string>
+-	</array>
+ 	<key>com.apple.security.files.user-selected.read-only</key>
+ 	<true/>
+ </dict>
