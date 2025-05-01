@@ -27,6 +27,15 @@ cp() { /bin/cp "$@"; }
 )
 
 (
+  cd ./Maccy
+  xcodebuild -scheme Maccy -configuration Release \
+    -derivedDataPath ./DerivedData \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY"
+  /bin/cp -acf ./DerivedData/Build/Products/Release/Maccy.app ../"$ARCHIVE_DIR"
+)
+
+(
   if ! command -v pod &>/dev/null; then
     echo "require cocoapods: brew install cocoapods"
     exit 1

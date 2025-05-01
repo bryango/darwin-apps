@@ -13,3 +13,6 @@
 [submodule "AutoMute"]
 	path = AutoMute
 	url = https://github.com/yonilevy/automute.git
+[submodule "Maccy"]
+	path = Maccy
+	url = https://github.com/p0deje/Maccy.git
