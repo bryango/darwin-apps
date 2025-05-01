@@ -3,6 +3,7 @@
 # in this script we assume gnu cli utils
 
 SET_DEVELOPMENT_TEAM=DEVELOPMENT_TEAM=AWMJ8H4G7B
+SET_CODE_SIGN_IDENTITY=CODE_SIGN_IDENTITY="Apple Development"
 ARCHIVE_DIR=archive/Applications
 PNAME=darwin-apps
 STORE_PATH_FILE="$PNAME.txt"
@@ -27,16 +28,16 @@ mkdir -p "$ARCHIVE_DIR"
     exit 1
   fi
 
-  cd ./automute
-  patch < ../automute-signing.patch
+  cd ./AutoMute
+  patch < ../AutoMute-entitlements.patch
   pod install
   xcodebuild -workspace automute.xcworkspace -scheme AutoMute -configuration Release \
     -derivedDataPath ./DerivedData \
     -allowProvisioningUpdates \
     "$SET_DEVELOPMENT_TEAM" \
-    CODE_SIGN_IDENTITY="Apple Development"
+    "$SET_CODE_SIGN_IDENTITY"
   /bin/cp -acf ./DerivedData/Build/Products/Release/AutoMute.app ../"$ARCHIVE_DIR"
-  git restore 'Pod*'
+  git restore 'Pod*' '**.entitlements'
 )
 
 (
