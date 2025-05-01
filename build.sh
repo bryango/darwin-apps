@@ -4,6 +4,7 @@
 
 SET_DEVELOPMENT_TEAM=DEVELOPMENT_TEAM=AWMJ8H4G7B
 SET_CODE_SIGN_IDENTITY=CODE_SIGN_IDENTITY="Apple Development"
+
 ARCHIVE_DIR=archive/Applications
 PNAME=darwin-apps
 STORE_PATH_FILE="$PNAME.txt"
@@ -13,6 +14,9 @@ set -x
 
 cd "$(dirname "$0")"
 mkdir -p "$ARCHIVE_DIR"
+
+# make sure we use `cp` from macos
+cp() { /bin/cp "$@"; }
 
 (
   cd ./Ice
@@ -51,7 +55,8 @@ mkdir -p "$ARCHIVE_DIR"
 
   xcodebuild -scheme Release -workspace alt-tab-macos.xcworkspace \
     -derivedDataPath ./DerivedData \
-    CODE_SIGN_IDENTITY="Apple Development: bryanlai@foxmail.com (VY3W9R894Q)" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY" \
     MACOSX_DEPLOYMENT_TARGET=10.13
   /bin/cp -acf ./DerivedData/Build/Products/Release/AltTab.app ../"$ARCHIVE_DIR"
 
