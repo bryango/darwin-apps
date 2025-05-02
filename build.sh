@@ -105,7 +105,7 @@ cp() { /bin/cp "$@"; }
   /bin/cp -acf "$DERIVED_RELEASE"/Rectangle.app ../"$ARCHIVE_APPS"
 )
 
-if command -v nix cachix &>/dev/null; then
+if ! command -v nix cachix &>/dev/null; then
   >&2 echo "# require nix & cachix for packaging & caching"
   exit 1
 fi
