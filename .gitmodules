@@ -16,3 +16,6 @@
 [submodule "Maccy"]
 	path = Maccy
 	url = https://github.com/p0deje/Maccy.git
+[submodule "Amethyst"]
+	path = Amethyst
+	url = https://github.com/ianyh/Amethyst.git

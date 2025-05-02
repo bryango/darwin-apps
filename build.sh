@@ -32,6 +32,18 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./Amethyst
+  patch < ../_patches/Amethyst-dont-lint.patch
+  xcodebuild -workspace Amethyst.xcworkspace -scheme Amethyst \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY"
+  /bin/cp -acf "$DERIVED_RELEASE"/Amethyst.app ../"$ARCHIVE_APPS"
+  git restore Amethyst.xcodeproj
+)
+
+(
   cd ./Ice
   xcodebuild -scheme Ice \
     "${FLAG_RELEASE[@]}" \

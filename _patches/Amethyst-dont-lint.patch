@@ -1,0 +1,37 @@
+diff --git a/Amethyst.xcodeproj/project.pbxproj b/Amethyst.xcodeproj/project.pbxproj
+index d04c6de..08c2ddf 100644
+--- a/Amethyst.xcodeproj/project.pbxproj
++++ b/Amethyst.xcodeproj/project.pbxproj
+@@ -610,7 +610,6 @@
+ 			isa = PBXNativeTarget;
+ 			buildConfigurationList = 402DB6FB1742E41A00D1C936 /* Build configuration list for PBXNativeTarget "Amethyst" */;
+ 			buildPhases = (
+-				4058C4701C4C4F9E00B19D26 /* Lint */,
+ 				402DB6DA1742E41A00D1C936 /* Sources */,
+ 				402DB6DB1742E41A00D1C936 /* Frameworks */,
+ 				402DB6DC1742E41A00D1C936 /* Resources */,
+@@ -758,24 +757,6 @@
+ 		};
+ /* End PBXResourcesBuildPhase section */
+ 
+-/* Begin PBXShellScriptBuildPhase section */
+-		4058C4701C4C4F9E00B19D26 /* Lint */ = {
+-			isa = PBXShellScriptBuildPhase;
+-			alwaysOutOfDate = 1;
+-			buildActionMask = 2147483647;
+-			files = (
+-			);
+-			inputPaths = (
+-			);
+-			name = Lint;
+-			outputPaths = (
+-			);
+-			runOnlyForDeploymentPostprocessing = 0;
+-			shellPath = /bin/sh;
+-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nswiftlint --fix\nswiftlint\n";
+-		};
+-/* End PBXShellScriptBuildPhase section */
+-
+ /* Begin PBXSourcesBuildPhase section */
+ 		402DB6DA1742E41A00D1C936 /* Sources */ = {
+ 			isa = PBXSourcesBuildPhase;
