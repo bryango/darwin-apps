@@ -5,6 +5,11 @@
 [[ -n $DEVELOPMENT_TEAM ]] || DEVELOPMENT_TEAM=AWMJ8H4G7B
 [[ -n $CODE_SIGN_IDENTITY ]] || CODE_SIGN_IDENTITY="Apple Development"
 
+# set up packaging with nix & cachix
+[[ -n $CACHIX_CACHE ]] || CACHIX_CACHE=chezbryan
+[[ -n $PNAME ]] || PNAME=darwin-apps
+STORE_PATH_FILE="$PNAME.txt"
+
 set -euo pipefail
 
 SET_DEVELOPMENT_TEAM=DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM"
@@ -14,12 +19,8 @@ FLAG_RELEASE=("-configuration" "Release")
 FLAG_DERIVED_DATA=("-derivedDataPath" "./DerivedData")
 
 PROJECT_DIR="$(dirname "$0")"
-ARCHIVE_DIR=_archive
-ARCHIVE_APPS="$ARCHIVE_DIR/Applications"
+ARCHIVE_APPS=_archive/Applications
 DERIVED_RELEASE=./DerivedData/Build/Products/Release
-
-PNAME=darwin-apps
-STORE_PATH_FILE="$PNAME.txt"
 
 set -x
 
@@ -51,12 +52,12 @@ cp() { /bin/cp "$@"; }
 
 (
   if ! command -v pod &>/dev/null; then
-    echo "require cocoapods: brew install cocoapods"
+    >&2 echo "# require cocoapods: brew install cocoapods"
     exit 1
   fi
 
   cd ./AutoMute
-  patch < ../AutoMute-entitlements.patch
+  patch < ../_patches/AutoMute-entitlements.patch
   pod install
   xcodebuild -workspace automute.xcworkspace -scheme AutoMute \
     -allowProvisioningUpdates \
@@ -89,7 +90,7 @@ cp() { /bin/cp "$@"; }
 
 (
   cd ./MiddleClick
-  patch < ../MiddleClick-dev-team.patch
+  patch < ../_patches/MiddleClick-dev-team.patch
   make
   /bin/cp -acf ./build/MiddleClick.app ../"$ARCHIVE_APPS"
   git restore Makefile
@@ -104,7 +105,12 @@ cp() { /bin/cp "$@"; }
   /bin/cp -acf "$DERIVED_RELEASE"/Rectangle.app ../"$ARCHIVE_APPS"
 )
 
-nix store add --name "$PNAME" ./archive > "$STORE_PATH_FILE"
+if command -v nix cachix &>/dev/null; then
+  >&2 echo "# require nix & cachix for packaging & caching"
+  exit 1
+fi
+
+nix store add --name "$PNAME" ./_archive > "$STORE_PATH_FILE"
 git add --intent-to-add "$STORE_PATH_FILE"
-cachix push chezbryan "$(cat "$STORE_PATH_FILE")"
+cachix push "$CACHIX_CACHE" "$(cat "$STORE_PATH_FILE")"
 cat "$STORE_PATH_FILE"
