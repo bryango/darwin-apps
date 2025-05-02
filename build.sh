@@ -1,38 +1,52 @@
 #!/bin/bash
 # build script for mac apps
-# in this script we assume gnu cli utils
 
-SET_DEVELOPMENT_TEAM=DEVELOPMENT_TEAM=AWMJ8H4G7B
-SET_CODE_SIGN_IDENTITY=CODE_SIGN_IDENTITY="Apple Development"
+# set up code signing identities
+[[ -n $DEVELOPMENT_TEAM ]] || DEVELOPMENT_TEAM=AWMJ8H4G7B
+[[ -n $CODE_SIGN_IDENTITY ]] || CODE_SIGN_IDENTITY="Apple Development"
 
-ARCHIVE_DIR=archive/Applications
+set -euo pipefail
+
+SET_DEVELOPMENT_TEAM=DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM"
+SET_CODE_SIGN_IDENTITY=CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY"
+
+FLAG_RELEASE=("-configuration" "Release")
+FLAG_DERIVED_DATA=("-derivedDataPath" "./DerivedData")
+
+PROJECT_DIR="$(dirname "$0")"
+ARCHIVE_DIR=_archive
+ARCHIVE_APPS="$ARCHIVE_DIR/Applications"
+DERIVED_RELEASE=./DerivedData/Build/Products/Release
+
 PNAME=darwin-apps
 STORE_PATH_FILE="$PNAME.txt"
 
-set -euo pipefail
 set -x
 
-cd "$(dirname "$0")"
-mkdir -p "$ARCHIVE_DIR"
+cd "$PROJECT_DIR"
+mkdir -p "$ARCHIVE_APPS"
 
 # make sure we use `cp` from macos
+# which supports the `-c` flag for clonefile
 cp() { /bin/cp "$@"; }
 
 (
   cd ./Ice
-  xcodebuild -scheme Ice -configuration Release \
-    -derivedDataPath ./DerivedData \
+  xcodebuild -scheme Ice \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
     "$SET_DEVELOPMENT_TEAM"
-  /bin/cp -acf ./DerivedData/Build/Products/Release/Ice.app ../"$ARCHIVE_DIR"
+  /bin/cp -acf "$DERIVED_RELEASE"/Ice.app ../"$ARCHIVE_APPS"
 )
 
 (
   cd ./Maccy
-  xcodebuild -scheme Maccy -configuration Release \
-    -derivedDataPath ./DerivedData \
+  xcodebuild -scheme Maccy \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
     "$SET_DEVELOPMENT_TEAM" \
     "$SET_CODE_SIGN_IDENTITY"
-  /bin/cp -acf ./DerivedData/Build/Products/Release/Maccy.app ../"$ARCHIVE_DIR"
+  /bin/cp -acf "$DERIVED_RELEASE"/Maccy.app ../"$ARCHIVE_APPS"
 )
 
 (
@@ -44,12 +58,13 @@ cp() { /bin/cp "$@"; }
   cd ./AutoMute
   patch < ../AutoMute-entitlements.patch
   pod install
-  xcodebuild -workspace automute.xcworkspace -scheme AutoMute -configuration Release \
-    -derivedDataPath ./DerivedData \
+  xcodebuild -workspace automute.xcworkspace -scheme AutoMute \
     -allowProvisioningUpdates \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
     "$SET_DEVELOPMENT_TEAM" \
     "$SET_CODE_SIGN_IDENTITY"
-  /bin/cp -acf ./DerivedData/Build/Products/Release/AutoMute.app ../"$ARCHIVE_DIR"
+  /bin/cp -acf "$DERIVED_RELEASE"/AutoMute.app ../"$ARCHIVE_APPS"
   git restore 'Pod*' '**.entitlements'
 )
 
@@ -63,11 +78,11 @@ cp() { /bin/cp "$@"; }
   sed -i '' -e "s/#VERSION#/$version/" Info.plist
 
   xcodebuild -scheme Release -workspace alt-tab-macos.xcworkspace \
-    -derivedDataPath ./DerivedData \
+    "${FLAG_DERIVED_DATA[@]}" \
     "$SET_DEVELOPMENT_TEAM" \
     "$SET_CODE_SIGN_IDENTITY" \
     MACOSX_DEPLOYMENT_TARGET=10.13
-  /bin/cp -acf ./DerivedData/Build/Products/Release/AltTab.app ../"$ARCHIVE_DIR"
+  /bin/cp -acf "$DERIVED_RELEASE"/AltTab.app ../"$ARCHIVE_APPS"
 
   git restore Info.plist
 )
@@ -76,16 +91,17 @@ cp() { /bin/cp "$@"; }
   cd ./MiddleClick
   patch < ../MiddleClick-dev-team.patch
   make
-  /bin/cp -acf ./build/MiddleClick.app ../"$ARCHIVE_DIR"
+  /bin/cp -acf ./build/MiddleClick.app ../"$ARCHIVE_APPS"
   git restore Makefile
 )
 
 (
   cd ./Rectangle
-  xcodebuild -scheme Rectangle -configuration Release \
-    -derivedDataPath ./DerivedData \
+  xcodebuild -scheme Rectangle \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
     "$SET_DEVELOPMENT_TEAM"
-  /bin/cp -acf ./DerivedData/Build/Products/Release/Rectangle.app ../"$ARCHIVE_DIR"
+  /bin/cp -acf "$DERIVED_RELEASE"/Rectangle.app ../"$ARCHIVE_APPS"
 )
 
 nix store add --name "$PNAME" ./archive > "$STORE_PATH_FILE"
