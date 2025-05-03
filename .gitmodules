@@ -19,3 +19,6 @@
 [submodule "Amethyst"]
 	path = Amethyst
 	url = https://github.com/ianyh/Amethyst.git
+[submodule "TeXShop"]
+	path = TeXShop
+	url = https://github.com/TeXShop/TeXShop.git

@@ -32,6 +32,18 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./TeXShop
+  patch < ../_patches/TeXShop-fix-build.patch
+  xcodebuild -scheme TeXShop \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY"
+  /bin/cp -acf "$DERIVED_RELEASE"/TeXShop.app ../"$ARCHIVE_APPS"
+  git restore TeXShop.xcodeproj
+)
+
+(
   cd ./Amethyst
   patch < ../_patches/Amethyst-dont-lint.patch
   xcodebuild -workspace Amethyst.xcworkspace -scheme Amethyst \
