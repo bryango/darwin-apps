@@ -91,9 +91,20 @@ jobs:
         }
         EOF
 
+    - name: Zip the .apps
+      if: github.ref_type == 'tag'
+      run: |
+        set -x
+        for app in _archive/Applications/*.app; do
+          if [ -d "$app" ]; then
+            ditto -c -k --keepParent "$app" "$app.zip"
+          fi
+        done
+        set +x
+
     - name: Release .app bundles
       uses: softprops/action-gh-release@v2
       if: github.ref_type == 'tag'
       with:
         files: |
-          _archive/Applications/*
+          _archive/Applications/*.app.zip
