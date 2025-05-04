@@ -1,6 +1,6 @@
 # build mac apps from source
 
-There are many wonderful open source Mac apps. They greatly improve the quality of life for a power user.
+There are many wonderful open source Mac apps, which greatly improve the quality of life for a power user.
 Most of them are distributed as `.app` bundles in github releases.
 Unfortunately, since [the xz incident](https://en.wikipedia.org/wiki/XZ_Utils_backdoor) I can no longer sleep well while running random release tarballs (let alone binaries) on my machine.
 Let's build these apps from source then!
@@ -11,6 +11,20 @@ Let's build these apps from source then!
 
 
 ## usage
+
+### binaries
+
+Zip archives of `.app` bundles can be found in [Releases](https://github.com/bryango/darwin/releases/).
+The build process is transparent and fully automated with:
+- the build script [`build.sh`](./build.sh), and
+- github actions [`.github/workflows/build.yml`](./.github/workflows/build.yml)
+
+Releases are tagged manually after significant updates, but all binaries are built and published automatically by bots.
+
+> CI also pushes a [nix package](https://gist.github.com/bryango/0057346dbf85981e58518be49d36fc06) to [cachix](https://chezbryan.cachix.org/) for my personal use.
+> This is explained in more details in the later sections
+
+### sources
 
 App sources are pulled in as git submodules.
 Github renders them nicely in the web ui and one can easily click and jump to the source repository.
@@ -23,7 +37,9 @@ Beware of the GNU GPLv3 license though 😉 I believe in free software!
 
 ## build.sh
 
-The entire build (and packaging) process is handled by the monolithic [`build.sh`](./build.sh) script. One should be able to execute the script locally, provided a properly initialized xcode with an apple account logged in. 
+The entire build (and packaging) process is handled by the monolithic [`build.sh`](./build.sh) script.
+One should be able to execute the script locally, provided a properly initialized xcode with an apple account logged in;
+please refer to the sections below for more instructions.
 However, this may not be what you want as it would build the whole set of packages _for me_.
 You should just take whatever apps you need from the repo, and drop the useless ones.
 
@@ -60,3 +76,8 @@ Additional tokens are required for binary caching with nix and cachix. Please re
 
 At the end of [`build.sh`](./build.sh) we attempt to package and cache the build results into a nix archive.
 This final phase in [`build.sh`](./build.sh) requires nix and cachix.
+This design is very much self-serving as my system configuration is mostly managed by nix.
+The store path of the final nix package is pushed to:
+- https://gist.github.com/bryango/0057346dbf85981e58518be49d36fc06
+
+So that I can easily refer to it in a nix configuration.
