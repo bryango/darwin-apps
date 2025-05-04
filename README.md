@@ -9,7 +9,6 @@ Let's build these apps from source then!
 > but I have tried many (including homebrew, nix and macports) and none of them is suitable for the task. Therefore, I have to hand-roll my own
 > poor man's package manager for `.app`. That is the purpose of this repo.
 
-
 ## usage
 
 ### binaries
@@ -81,3 +80,10 @@ The store path of the final nix package is pushed to:
 - https://gist.github.com/bryango/0057346dbf85981e58518be49d36fc06
 
 So that I can easily refer to it in a nix configuration.
+
+## epilog
+
+> Finally, you might point out that building from source is also not guaranteed to be safe;
+> as we know, the source code itself is also compromised in the xz incident.
+> However, I think this loophole may be closed soon as LLMs are already capable of reviewing entire codebases.
+> As always, plain texts are much more easier to examine than binaries.
