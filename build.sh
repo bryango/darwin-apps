@@ -39,17 +39,21 @@ cp() { /bin/cp "$@"; }
     "$SET_DEVELOPMENT_TEAM" \
     "$SET_CODE_SIGN_IDENTITY"
   /bin/cp -acf "$DERIVED_RELEASE"/Transmission.app ../"$ARCHIVE_APPS"
+
+  # remove some garbage generated during the build
+  git submodule foreach --recursive git clean -fd
 )
 
-(
-  cd ./Battery-Toolkit
-  xcodebuild -scheme "Battery Toolkit"\
-    "${FLAG_RELEASE[@]}" \
-    "${FLAG_DERIVED_DATA[@]}" \
-    "$SET_DEVELOPMENT_TEAM" \
-    "$SET_CODE_SIGN_IDENTITY"
-  /bin/cp -acf "$DERIVED_RELEASE"/"Battery Toolkit".app ../"$ARCHIVE_APPS"
-)
+# # disabled: not working for the moment
+# (
+#   cd ./Battery-Toolkit
+#   xcodebuild -scheme "Battery Toolkit"\
+#     "${FLAG_RELEASE[@]}" \
+#     "${FLAG_DERIVED_DATA[@]}" \
+#     "$SET_DEVELOPMENT_TEAM" \
+#     "$SET_CODE_SIGN_IDENTITY"
+#   /bin/cp -acf "$DERIVED_RELEASE"/"Battery Toolkit".app ../"$ARCHIVE_APPS"
+# )
 
 (
   cd ./TeXShop
