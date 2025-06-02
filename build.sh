@@ -32,6 +32,26 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./Transmission
+  xcodebuild -scheme Transmission\
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY"
+  /bin/cp -acf "$DERIVED_RELEASE"/Transmission.app ../"$ARCHIVE_APPS"
+)
+
+(
+  cd ./Battery-Toolkit
+  xcodebuild -scheme "Battery Toolkit"\
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY"
+  /bin/cp -acf "$DERIVED_RELEASE"/"Battery Toolkit".app ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./TeXShop
   patch < ../_patches/TeXShop-fix-build.patch
   xcodebuild -scheme TeXShop \
