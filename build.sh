@@ -32,8 +32,18 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./AlDente
+  xcodebuild -scheme AlDente \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY"
+  /bin/cp -acf "$DERIVED_RELEASE"/AlDente.app ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./Transmission
-  xcodebuild -scheme Transmission\
+  xcodebuild -scheme Transmission \
     "${FLAG_RELEASE[@]}" \
     "${FLAG_DERIVED_DATA[@]}" \
     "$SET_DEVELOPMENT_TEAM" \
