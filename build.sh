@@ -51,7 +51,8 @@ cp() { /bin/cp "$@"; }
 #     "${FLAG_RELEASE[@]}" \
 #     "${FLAG_DERIVED_DATA[@]}" \
 #     "$SET_DEVELOPMENT_TEAM" \
-#     "$SET_CODE_SIGN_IDENTITY"
+#     "$SET_CODE_SIGN_IDENTITY" \
+#     BT_CODESIGN_CN="Apple Development: bryanlai@foxmail.com (VY3W9R894Q)"
 #   /bin/cp -acf "$DERIVED_RELEASE"/"Battery Toolkit".app ../"$ARCHIVE_APPS"
 # )
 
