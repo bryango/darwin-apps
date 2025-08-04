@@ -28,3 +28,6 @@
 [submodule "Battery-Toolkit"]
 	path = Battery-Toolkit
 	url = https://github.com/mhaeuser/Battery-Toolkit.git
+[submodule "Stats"]
+	path = Stats
+	url = https://github.com/exelban/stats.git
