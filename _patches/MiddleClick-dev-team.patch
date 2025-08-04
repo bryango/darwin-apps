@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index c146d26..e1f63fb 100644
+index c146d26..93d017b 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1,7 +1,8 @@
@@ -8,7 +8,19 @@ index c146d26..e1f63fb 100644
  archive:
 -	xcodebuild -project MiddleClick.xcodeproj -scheme MiddleClick -configuration Release archive
 +	xcodebuild -project MiddleClick.xcodeproj -scheme MiddleClick -configuration Release archive \
-+		DEVELOPMENT_TEAM=AWMJ8H4G7B
++		DEVELOPMENT_TEAM=AWMJ8H4G7B CODE_SIGN_IDENTITY="Apple Development"
  
  export:
  	xcodebuild -exportArchive \
+diff --git a/build-config/ExportOptions.plist b/build-config/ExportOptions.plist
+index 055f67c..fbaeb9e 100644
+--- a/build-config/ExportOptions.plist
++++ b/build-config/ExportOptions.plist
+@@ -3,6 +3,6 @@
+ <plist version="1.0">
+ <dict>
+ 	<key>method</key>
+-	<string>developer-id</string>
++	<string>debugging</string>
+ </dict>
+ </plist>

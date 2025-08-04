@@ -32,6 +32,14 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./MiddleClick
+  patch < ../_patches/MiddleClick-dev-team.patch
+  make
+  /bin/cp -acf ./build/MiddleClick.app ../"$ARCHIVE_APPS"
+  git restore Makefile build-config/ExportOptions.plist
+)
+
+(
   export PATH="/bin:$PATH" # use `/bin/PWD`
   cd ./Stats
   xcodebuild -scheme Stats \
@@ -146,14 +154,6 @@ cp() { /bin/cp "$@"; }
   /bin/cp -acf "$DERIVED_RELEASE"/AltTab.app ../"$ARCHIVE_APPS"
 
   git restore Info.plist
-)
-
-(
-  cd ./MiddleClick
-  patch < ../_patches/MiddleClick-dev-team.patch
-  make
-  /bin/cp -acf ./build/MiddleClick.app ../"$ARCHIVE_APPS"
-  git restore Makefile
 )
 
 (
