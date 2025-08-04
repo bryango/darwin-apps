@@ -28,6 +28,3 @@
 [submodule "Battery-Toolkit"]
 	path = Battery-Toolkit
 	url = https://github.com/mhaeuser/Battery-Toolkit.git
-[submodule "AlDente"]
-	path = AlDente
-	url = https://github.com/AppHouseKitchen/AlDente-Charge-Limiter.git
