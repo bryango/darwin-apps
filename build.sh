@@ -32,6 +32,25 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./AltTab
+
+  # update version; see:
+  # - ./.github/workflows/ci_cd.yml
+  # - ./scripts/replace_environment_variables_in_app.sh
+  version=$(git describe --tags --match='v*' | sed 's/^v//')
+  /usr/bin/sed -i '' -e "s/#VERSION#/$version/" Info.plist
+
+  xcodebuild -scheme Release -workspace alt-tab-macos.xcworkspace \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY" \
+    MACOSX_DEPLOYMENT_TARGET=10.13
+  /bin/cp -acf "$DERIVED_RELEASE"/AltTab.app ../"$ARCHIVE_APPS"
+
+  git restore Info.plist
+)
+
+(
   cd ./MiddleClick
   patch < ../_patches/MiddleClick-dev-team.patch
   make
@@ -135,25 +154,6 @@ cp() { /bin/cp "$@"; }
     "$SET_CODE_SIGN_IDENTITY"
   /bin/cp -acf "$DERIVED_RELEASE"/AutoMute.app ../"$ARCHIVE_APPS"
   git restore 'Pod*' '**.entitlements'
-)
-
-(
-  cd ./AltTab
-
-  # update version; see:
-  # - ./.github/workflows/ci_cd.yml
-  # - ./scripts/replace_environment_variables_in_app.sh
-  version=$(git describe --tags --match='v*' | sed 's/^v//')
-  sed -i '' -e "s/#VERSION#/$version/" Info.plist
-
-  xcodebuild -scheme Release -workspace alt-tab-macos.xcworkspace \
-    "${FLAG_DERIVED_DATA[@]}" \
-    "$SET_DEVELOPMENT_TEAM" \
-    "$SET_CODE_SIGN_IDENTITY" \
-    MACOSX_DEPLOYMENT_TARGET=10.13
-  /bin/cp -acf "$DERIVED_RELEASE"/AltTab.app ../"$ARCHIVE_APPS"
-
-  git restore Info.plist
 )
 
 (
