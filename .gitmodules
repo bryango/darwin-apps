@@ -31,3 +31,6 @@
 [submodule "Stats"]
 	path = Stats
 	url = https://github.com/exelban/stats.git
+[submodule "PixelPerfect"]
+	path = PixelPerfect
+	url = https://github.com/cormiertyshawn895/PixelPerfect.git

@@ -32,6 +32,17 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./PixelPerfect/PixelPerfect
+
+  xcodebuild -scheme "Pixel Perfect" \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY"
+  mv -f "$DERIVED_RELEASE"/"Pixel Perfect".app ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./AltTab
 
   # update version; see:
