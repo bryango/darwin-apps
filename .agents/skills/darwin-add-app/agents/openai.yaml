@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Darwin App"
+  short_description: "Add an app to the darwin build repository"
+  default_prompt: "Use $add-darwin-app to add a new macOS app submodule to the darwin build archive."
