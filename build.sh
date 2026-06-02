@@ -32,6 +32,14 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./CodexBar
+  APP_TEAM_ID="$DEVELOPMENT_TEAM" \
+  APP_IDENTITY="$CODE_SIGN_IDENTITY" \
+    ./Scripts/package_app.sh release
+  /bin/cp -acf ./CodexBar.app ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./PixelPerfect/PixelPerfect
 
   xcodebuild -scheme "Pixel Perfect" \
