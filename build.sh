@@ -195,5 +195,5 @@ cachix push "$CACHIX_CACHE" "$(cat "$STORE_PATH_FILE")"
 
 # post the store path in github actions
 # see: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions
-echo "::notice title=nix-store-patch::$(cat "$STORE_PATH_FILE")"
+echo "::notice title=nix-store-path::$(cat "$STORE_PATH_FILE")"
 cat "$STORE_PATH_FILE"
