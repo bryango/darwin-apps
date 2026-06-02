@@ -34,3 +34,6 @@
 [submodule "PixelPerfect"]
 	path = PixelPerfect
 	url = https://github.com/cormiertyshawn895/PixelPerfect.git
+[submodule "CodexBar"]
+	path = CodexBar
+	url = https://github.com/steipete/CodexBar.git

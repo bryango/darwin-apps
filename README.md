@@ -65,7 +65,30 @@ Automatic development code signing will be performed if correct IDs are specifie
 
 The build script is designed to run on GitHub actions with development certificates, implemented in [`.github/workflows/build.yml`](./.github/workflows/build.yml).
 Refer to the official documentation to set up the certificates:
-- https://docs.github.com/en/actions/use-cases-and-examples/deploying/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+- https://docs.github.com/en/actions/how-tos/deploy/deploy-to-third-party-platforms/sign-xcode-applications
+
+The workflow expects these repository secrets:
+
+- `BUILD_CERTIFICATE_BASE64`: a base64-encoded `.p12` export of the Apple signing certificate and its private key.
+  Export the development certificate from Xcode, save it as `apple-dev-cert.p12`, then copy the encoded value with:
+
+  ```sh
+  base64 -i apple-dev-cert.p12 | pbcopy
+  ```
+
+  Paste that value into the GitHub Actions secret. Refresh this secret whenever the development certificate used for CI is recreated, renewed, revoked, or replaced.
+
+- `P12_PASSWORD`: the password chosen when exporting `apple-dev-cert.p12`. Update this secret only when the `.p12` export password changes.
+
+- `KEYCHAIN_PASSWORD`: any random password used only for the temporary CI keychain created during the workflow run. This is not an Apple account password and does not need to match the `.p12` password. A fresh value can be generated with:
+
+  ```sh
+  openssl rand -base64 32
+  ```
+
+  And it does _not_ need to be changed even when the certificate is renewed.
+
+The workflow decodes `BUILD_CERTIFICATE_BASE64`, imports it into a temporary keychain using `P12_PASSWORD`, unlocks that keychain with `KEYCHAIN_PASSWORD`, and then runs [`build.sh`](./build.sh). GitHub-hosted runners are discarded after the job, so the temporary keychain is not persistent.
 
 We can ignore provisioning for the moment as that requires a paid account, and it's possible to circumvent it by patching the source code as needed (implemented case by case in the build script).
 
