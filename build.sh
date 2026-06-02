@@ -32,6 +32,15 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./Rectangle
+  xcodebuild -scheme Rectangle \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM"
+  /bin/cp -acf "$DERIVED_RELEASE"/Rectangle.app ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./CodexBar
   APP_TEAM_ID="$DEVELOPMENT_TEAM" \
   APP_IDENTITY="$CODE_SIGN_IDENTITY" \
@@ -173,15 +182,6 @@ cp() { /bin/cp "$@"; }
     "$SET_CODE_SIGN_IDENTITY"
   /bin/cp -acf "$DERIVED_RELEASE"/AutoMute.app ../"$ARCHIVE_APPS"
   git restore 'Pod*' '**.entitlements'
-)
-
-(
-  cd ./Rectangle
-  xcodebuild -scheme Rectangle \
-    "${FLAG_RELEASE[@]}" \
-    "${FLAG_DERIVED_DATA[@]}" \
-    "$SET_DEVELOPMENT_TEAM"
-  /bin/cp -acf "$DERIVED_RELEASE"/Rectangle.app ../"$ARCHIVE_APPS"
 )
 
 if ! command -v nix cachix &>/dev/null; then

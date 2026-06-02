@@ -36,7 +36,7 @@ jobs:
         extraPullNames: nix-community
     - run: nix config show
 
-    - name: Select xcode 26.2
+    - name: Select a specific xcode version
       run: sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
     - name: Build & sign darwin .apps
       if: startsWith(matrix.os, 'macos')
