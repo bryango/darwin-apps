@@ -1,0 +1,20 @@
+diff --git a/Rectangle.xcodeproj/project.pbxproj b/Rectangle.xcodeproj/project.pbxproj
+index c762a1c..1455c85 100644
+--- a/Rectangle.xcodeproj/project.pbxproj
++++ b/Rectangle.xcodeproj/project.pbxproj
+@@ -1369,7 +1369,6 @@
+ 			buildSettings = {
+ 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+ 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+-				ASSETCATALOG_OTHER_FLAGS = "--enable-icon-stack-fallback-generation=disabled";
+ 				CLANG_ENABLE_MODULES = YES;
+ 				CODE_SIGN_ENTITLEMENTS = Rectangle/Rectangle.entitlements;
+ 				CODE_SIGN_IDENTITY = "-";
+@@ -1401,7 +1400,6 @@
+ 			buildSettings = {
+ 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+ 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+-				ASSETCATALOG_OTHER_FLAGS = "--enable-icon-stack-fallback-generation=disabled";
+ 				CLANG_ENABLE_MODULES = YES;
+ 				CODE_SIGN_ENTITLEMENTS = Rectangle/RectangleRelease.entitlements;
+ 				CODE_SIGN_IDENTITY = "Apple Development";

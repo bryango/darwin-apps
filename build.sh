@@ -33,11 +33,13 @@ cp() { /bin/cp "$@"; }
 
 (
   cd ./Rectangle
+  patch < ../_patches/Rectangle-asset-catalog-flags.patch
   xcodebuild -scheme Rectangle \
     "${FLAG_RELEASE[@]}" \
     "${FLAG_DERIVED_DATA[@]}" \
     "$SET_DEVELOPMENT_TEAM"
   /bin/cp -acf "$DERIVED_RELEASE"/Rectangle.app ../"$ARCHIVE_APPS"
+  git restore Rectangle.xcodeproj
 )
 
 (
