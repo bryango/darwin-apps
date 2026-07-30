@@ -32,6 +32,23 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./AltTab
+
+  # inject version through the current upstream build setting; see:
+  # - ./.github/workflows/ci_cd.yml
+  # - ./scripts/replace_environment_variables_in_app.sh
+  version=$(git describe --tags --match='v*' | sed 's/^v//')
+
+  xcodebuild -project alt-tab-macos.xcodeproj -scheme Release \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY" \
+    MACOSX_DEPLOYMENT_TARGET=10.13 \
+    CURRENT_PROJECT_VERSION="$version"
+  /bin/cp -acf "$DERIVED_RELEASE"/AltTab.app ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./Rectangle
   patch < ../_patches/Rectangle-asset-catalog-flags.patch
   xcodebuild -scheme Rectangle \
@@ -59,25 +76,6 @@ cp() { /bin/cp "$@"; }
     "$SET_DEVELOPMENT_TEAM" \
     "$SET_CODE_SIGN_IDENTITY"
   mv -f "$DERIVED_RELEASE"/"Pixel Perfect".app ../../"$ARCHIVE_APPS"
-)
-
-(
-  cd ./AltTab
-
-  # update version; see:
-  # - ./.github/workflows/ci_cd.yml
-  # - ./scripts/replace_environment_variables_in_app.sh
-  version=$(git describe --tags --match='v*' | sed 's/^v//')
-  /usr/bin/sed -i '' -e "s/#VERSION#/$version/" Info.plist
-
-  xcodebuild -scheme Release -workspace alt-tab-macos.xcworkspace \
-    "${FLAG_DERIVED_DATA[@]}" \
-    "$SET_DEVELOPMENT_TEAM" \
-    "$SET_CODE_SIGN_IDENTITY" \
-    MACOSX_DEPLOYMENT_TARGET=10.13
-  /bin/cp -acf "$DERIVED_RELEASE"/AltTab.app ../"$ARCHIVE_APPS"
-
-  git restore Info.plist
 )
 
 (
