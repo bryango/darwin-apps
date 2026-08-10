@@ -23,6 +23,10 @@ Releases are tagged manually after significant updates, but all binaries are bui
 > CI also pushes a [nix package](https://gist.github.com/bryango/0057346dbf85981e58518be49d36fc06) to [cachix](https://chezbryan.cachix.org/) for my personal use.
 > This is explained in more details in the later sections
 
+### quirks
+
+- The AltTab app sometimes does not realize that it already has the screen recording permission. I have no idea why. In this case, just click "continue without screen recording", and after some time a system popup may show up and request for screen recording permission again. Now click "granted" and all would be good.
+
 ### sources
 
 App sources are pulled in as git submodules.
