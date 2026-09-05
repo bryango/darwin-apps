@@ -25,11 +25,27 @@ DERIVED_RELEASE=./DerivedData/Build/Products/Release
 set -x
 
 cd "$PROJECT_DIR"
+trash "$ARCHIVE_APPS" || true
 mkdir -p "$ARCHIVE_APPS"
 
 # make sure we use `cp` from macos
 # which supports the `-c` flag for clonefile
 cp() { /bin/cp "$@"; }
+
+(
+  cd ./CodexBar
+  # Refresh the widget's package cache while retaining its pinned versions.
+  xcodebuild -resolvePackageDependencies \
+    -project WidgetExtension/CodexBarWidgetExtension.xcodeproj \
+    -scheme CodexBarWidgetExtension \
+    -derivedDataPath .build/xcode-widget-extension-release \
+    -onlyUsePackageVersionsFromResolvedFile
+  CODEXBAR_SIGNING=adhoc \
+  CODEXBAR_SKIP_LAUNCH_SMOKE=1 \
+  APP_TEAM_ID="$DEVELOPMENT_TEAM" \
+    ./Scripts/package_app.sh release
+  /bin/cp -acf ./CodexBar.app ../"$ARCHIVE_APPS"
+)
 
 (
   cd ./AltTab
@@ -57,14 +73,6 @@ cp() { /bin/cp "$@"; }
     "$SET_DEVELOPMENT_TEAM"
   /bin/cp -acf "$DERIVED_RELEASE"/Rectangle.app ../"$ARCHIVE_APPS"
   git restore Rectangle.xcodeproj
-)
-
-(
-  cd ./CodexBar
-  APP_TEAM_ID="$DEVELOPMENT_TEAM" \
-  APP_IDENTITY="$CODE_SIGN_IDENTITY" \
-    ./Scripts/package_app.sh release
-  /bin/cp -acf ./CodexBar.app ../"$ARCHIVE_APPS"
 )
 
 (
