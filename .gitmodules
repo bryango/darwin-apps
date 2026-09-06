@@ -37,3 +37,6 @@
 [submodule "CodexBar"]
 	path = CodexBar
 	url = https://github.com/steipete/CodexBar.git
+[submodule "LaunchManager"]
+	path = LaunchManager
+	url = https://github.com/Sean10000/LaunchManager.git

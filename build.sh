@@ -33,6 +33,17 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./LaunchManager
+  xcodebuild -project LaunchManager.xcodeproj -scheme LaunchManager \
+    "${FLAG_RELEASE[@]}" \
+    "${FLAG_DERIVED_DATA[@]}" \
+    "$SET_DEVELOPMENT_TEAM" \
+    "$SET_CODE_SIGN_IDENTITY" \
+    ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO
+  /bin/cp -acf "$DERIVED_RELEASE"/LaunchManager.app ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./CodexBar
   # Refresh the widget's package cache while retaining its pinned versions.
   xcodebuild -resolvePackageDependencies \
