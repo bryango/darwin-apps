@@ -39,10 +39,12 @@ cp() { /bin/cp "$@"; }
   # Mirror ./.github/workflows/release.yml: Apple code signing stays on via
   # APPLE_SIGNING_IDENTITY, but the upstream Tauri updater private key is not
   # available locally, so disable updater artifact signing only.
-  if ! command -v pnpm rustup &>/dev/null; then
-    >&2 echo "# require pnpm & rustup: brew install pnpm rustup"
-    exit 1
-  fi
+  for cmd in pnpm rustup; do
+    if ! command -v "$cmd" &>/dev/null; then
+      >&2 echo "# require $cmd: brew install $cmd"
+      exit 1
+    fi
+  done
 
   rustup target add aarch64-apple-darwin
 
