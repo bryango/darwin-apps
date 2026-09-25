@@ -40,3 +40,6 @@
 [submodule "LaunchManager"]
 	path = LaunchManager
 	url = https://github.com/Sean10000/LaunchManager.git
+[submodule "ccswitchmulti"]
+	path = ccswitchmulti
+	url = git@github.com:bryango/ccswitchmulti.git
