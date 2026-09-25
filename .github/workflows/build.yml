@@ -16,24 +16,24 @@ jobs:
     env:
       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
         fetch-depth: 0       ## not shallow
         filter: 'blob:none'  ## but blob-less
         submodules: 'recursive'
-    - uses: pnpm/action-setup@v4
+    - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
       with:
         version: 10.12.3
         run_install: false
     - name: Set up CCSwitchMulti Rust toolchain
       working-directory: ccswitchmulti
       run: rustc --version
-    - uses: Swatinem/rust-cache@v2
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
       with:
         prefix-key: v1-ccswitchmulti-rust
         workspaces: ccswitchmulti/src-tauri -> target
         save-if: ${{ github.ref == 'refs/heads/master' }}
-    - uses: cachix/install-nix-action@v22
+    - uses: cachix/install-nix-action@6ed004b9ccb68dbc28e7c85bee15fa93dbd214ac # v22
       with:
         nix_path: nixpkgs=channel:nixpkgs-unstable
         install_url: https://releases.nixos.org/nix/nix-2.28.1/install
@@ -41,7 +41,7 @@ jobs:
           experimental-features = nix-command flakes fetch-closure configurable-impure-env
           impure-env = GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           trusted-users = root runner @wheel
-    - uses: cachix/cachix-action@v12
+    - uses: cachix/cachix-action@6a9a34cdd93d0ae4b4b59fd678660efb08109f2f # v12
       with:
         name: chezbryan
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -117,7 +117,7 @@ jobs:
         set +x
 
     - name: Release .app bundles
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
       if: github.ref_type == 'tag'
       with:
         files: |
