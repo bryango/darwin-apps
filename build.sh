@@ -32,47 +32,47 @@ mkdir -p "$ARCHIVE_APPS"
 # which supports the `-c` flag for clonefile
 cp() { /bin/cp "$@"; }
 
-(
-  cd ./ccswitchmulti
-
-  # Tauri app: pnpm frontend + cargo release build, then bundle CCSwitchMulti.app.
-  # Mirror ./.github/workflows/release.yml: Apple code signing stays on via
-  # APPLE_SIGNING_IDENTITY, but the upstream Tauri updater private key is not
-  # available locally, so disable updater artifact signing only.
-  for cmd in pnpm rustup; do
-    if ! command -v "$cmd" &>/dev/null; then
-      >&2 echo "# require $cmd: brew install $cmd"
-      exit 1
-    fi
-  done
-
-  rustup target add aarch64-apple-darwin
-
-  # sidecars built by release.yml (there as universal binaries via lipo)
-  cargo build \
-    --manifest-path src-tauri/Cargo.toml \
-    --bin codex-history-repairer \
-    --features history-repairer \
-    --target aarch64-apple-darwin \
-    --release
-
-  cargo build \
-    --manifest-path src-tauri/Cargo.toml \
-    --bin ccsm \
-    --target aarch64-apple-darwin \
-    --release
-
-  pnpm install --frozen-lockfile
-
-  APPLE_SIGNING_IDENTITY="$CODE_SIGN_IDENTITY" \
-    pnpm tauri build \
-      --target aarch64-apple-darwin \
-      --config ../_patches/ccswitchmulti-tauri-no-updater.json
-
-  APP=./src-tauri/target/aarch64-apple-darwin/release/bundle/macos/CCSwitchMulti.app
-  codesign --verify --deep --strict --verbose=2 "$APP"
-  /bin/cp -acf "$APP" ../"$ARCHIVE_APPS"
-)
+# (
+#   cd ./ccswitchmulti
+#
+#   # Tauri app: pnpm frontend + cargo release build, then bundle CCSwitchMulti.app.
+#   # Mirror ./.github/workflows/release.yml: Apple code signing stays on via
+#   # APPLE_SIGNING_IDENTITY, but the upstream Tauri updater private key is not
+#   # available locally, so disable updater artifact signing only.
+#   for cmd in pnpm rustup; do
+#     if ! command -v "$cmd" &>/dev/null; then
+#       >&2 echo "# require $cmd: brew install $cmd"
+#       exit 1
+#     fi
+#   done
+#
+#   rustup target add aarch64-apple-darwin
+#
+#   # sidecars built by release.yml (there as universal binaries via lipo)
+#   cargo build \
+#     --manifest-path src-tauri/Cargo.toml \
+#     --bin codex-history-repairer \
+#     --features history-repairer \
+#     --target aarch64-apple-darwin \
+#     --release
+#
+#   cargo build \
+#     --manifest-path src-tauri/Cargo.toml \
+#     --bin ccsm \
+#     --target aarch64-apple-darwin \
+#     --release
+#
+#   pnpm install --frozen-lockfile
+#
+#   APPLE_SIGNING_IDENTITY="$CODE_SIGN_IDENTITY" \
+#     pnpm tauri build \
+#       --target aarch64-apple-darwin \
+#       --config ../_patches/ccswitchmulti-tauri-no-updater.json
+#
+#   APP=./src-tauri/target/aarch64-apple-darwin/release/bundle/macos/CCSwitchMulti.app
+#   codesign --verify --deep --strict --verbose=2 "$APP"
+#   /bin/cp -acf "$APP" ../"$ARCHIVE_APPS"
+# )
 
 (
   cd ./CodexBar
