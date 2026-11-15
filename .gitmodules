@@ -48,5 +48,5 @@
 	url = https://github.com/jclusso/sleep-blocker.git
 [submodule "Quick-Chat"]
 	path = Quick-Chat
-	url = https://github.com/bryango/Quick-Chat.git
+	url = git@github.com:bryango/Quick-Chat.git
 	branch = main
