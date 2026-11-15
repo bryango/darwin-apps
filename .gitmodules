@@ -43,3 +43,6 @@
 [submodule "ccswitchmulti"]
 	path = ccswitchmulti
 	url = git@github.com:bryango/ccswitchmulti.git
+[submodule "SleepBlocker"]
+	path = SleepBlocker
+	url = https://github.com/jclusso/sleep-blocker.git

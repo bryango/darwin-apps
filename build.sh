@@ -32,6 +32,16 @@ mkdir -p "$ARCHIVE_APPS"
 # which supports the `-c` flag for clonefile
 cp() { /bin/cp "$@"; }
 
+(
+  cd ./SleepBlocker
+  # No Xcode project: the upstream Makefile compiles with `swiftc` into a
+  # manually assembled .app and ad-hoc signs it; re-sign with the development
+  # identity to match the rest of the archive.
+  make
+  codesign --force --deep --sign "$CODE_SIGN_IDENTITY" build/SleepBlocker.app
+  /bin/cp -acf build/SleepBlocker.app ../"$ARCHIVE_APPS"
+)
+
 # (
 #   cd ./ccswitchmulti
 #
