@@ -33,6 +33,12 @@ mkdir -p "$ARCHIVE_APPS"
 cp() { /bin/cp "$@"; }
 
 (
+  cd ./Quick-Chat
+  UNIVERSAL=1 CODESIGN_IDENTITY="$CODE_SIGN_IDENTITY" ./scripts/build-app.sh
+  /bin/cp -acf "build/Quick Chat.app" ../"$ARCHIVE_APPS"
+)
+
+(
   cd ./SleepBlocker
   # No Xcode project: the upstream Makefile compiles with `swiftc` into a
   # manually assembled .app and ad-hoc signs it; re-sign with the development

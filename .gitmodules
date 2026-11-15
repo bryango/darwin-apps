@@ -46,3 +46,7 @@
 [submodule "SleepBlocker"]
 	path = SleepBlocker
 	url = https://github.com/jclusso/sleep-blocker.git
+[submodule "Quick-Chat"]
+	path = Quick-Chat
+	url = https://github.com/shuaibird/Quick-Chat.git
+	branch = main
