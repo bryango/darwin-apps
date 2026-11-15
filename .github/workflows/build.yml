@@ -21,18 +21,6 @@ jobs:
         fetch-depth: 0       ## not shallow
         filter: 'blob:none'  ## but blob-less
         submodules: 'recursive'
-    - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-      with:
-        version: 10.12.3
-        run_install: false
-    - name: Set up CCSwitchMulti Rust toolchain
-      working-directory: ccswitchmulti
-      run: rustc --version
-    - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
-      with:
-        prefix-key: v1-ccswitchmulti-rust
-        workspaces: ccswitchmulti/src-tauri -> target
-        save-if: ${{ github.ref == 'refs/heads/master' }}
     - uses: cachix/install-nix-action@6ed004b9ccb68dbc28e7c85bee15fa93dbd214ac # v22
       with:
         nix_path: nixpkgs=channel:nixpkgs-unstable
